@@ -1,91 +1,96 @@
-let generatePage = teamObj => {
-    console.log('team object', teamObj)
+const generateTeam = (team) => {
+    console.log(team);
 
-   // set card to empty
-    let htmlCard = ""
+    const html = [];
 
-    //loop over array of objects
+    const generateManager = manager => {
+        console.log(manager);
+        let managerHtml = ` 
+        <div class="card" style="width: 18rem;">
+            <div class="card-header">
+           ${manager.name} <br/>
+           <i class="fas fa-mug-hot"></i>Manager</div>
+           <ul class="list-group list-group-flush">
+            <li class="list-group-item">ID: ${manager.id}</li>
+            <li class="list-group-item">Email: <span id="email"><a href="mailto:${manager.email}">${manager.email}</a></span></li>
+            <li class="list-group-item">Office Number: ${manager.officeNumber}</li>
+            </ul>
+        </div>
+        `;
+        html.push(managerHtml);
+    }
+    const generateEngineer = engineer => {
+        console.log(engineer);
+        let engineerHtml = ` 
+        <div class="card" style="width: 18rem;">
+            <div class="card-header">
+           ${engineer.name} <br/>
+           <i class="fas fa-glasses"></i>Engineer</div>
+           <ul class="list-group list-group-flush">
+            <li class="list-group-item">ID: ${engineer.id}</li>
+            <li class="list-group-item">Email: <span id="email"><a href="mailto:${engineer.email}">${engineer.email}</a></span></li>
+            <li class="list-group-item">Github Username: <a target="_blank" href="https://github.com/${engineer.githubUsername}">${engineer.githubUsername}</a></li>
+            </ul>
+        </div>
+        `;
+        html.push(engineerHtml);
+    }
+    const generateIntern = intern => {
+        console.log(intern);
+        let internHtml = ` 
+        <div class="card" style="width: 18rem;">
+            <div class="card-header">
+           ${intern.name} <br/>
+           <i class="fas fa-user-graduate"></i>Intern</div>
+           <ul class="list-group list-group-flush">
+            <li class="list-group-item">ID: ${intern.id}</li>
+            <li class="list-group-item">Email: <span id="email"><a href="mailto:${intern.email}">${intern.email}</a></span></li>
+            <li class="list-group-item">School: ${intern.school}</li>
+            </ul>
+        </div>
+        `;
+        html.push(internHtml);
+    }
 
-    for(let i = 0; i < teamObj.length; i++){
-        let finalPrompt = teamObj[i].office || teamObj[i].gitHub || teamObj[i].school;
-        let keys = Object.keys(teamObj[i]);
-        let lastKey = keys[4];
-        let finalOption = lastKey + ":" + finalPrompt
-
-        if (lastKey === undefined){
-            finalOption = "";
-
-        } else if (lastKey === 'gitHub'){
-            finalOption = (`GitHub : <a href = 'https://www.github.com/${teamObj[i].gitHub}'> ${teamObj[i].gitHub}</a>`)
-            console.log(finalOption)
+    // create a loop for all of the employees
+    for (let i = 0; i < team.length; i++) {
+        if (team[i].getRole() === "Manager") {
+            generateManager(team[i]);
         }
-        else{
-            console.log(finalOption)
+        if (team[i].getRole() === "Engineer") {
+            generateEngineer(team[i]);
         }
+        if (team[i].getRole() === "Intern") {
+            generateIntern(team[i]);
+        }
+    }
 
-
-       //htmll card
-        let {name, role, email, id} = teamObj[i]
-        htmlCard+= `
-         <div class="card col" style="width: 18rem;">
-         <div class="card-body card-header">
-             <h5 class="card-title">${name}</h5>
-             <h6 class="card-subtitle mb-2 text-muted">${role}</h6>
-         </div>
-         <ul class="list-group list-group-flush">
-             <li class="list-group-item">Email: <a href=mailto:${email}>${email}</a></li>
-             <li class="list-group-item">Employee ID: ${id}</li>
-             <li class="list-group-item"> ${finalOption}</li>
-             
-             
-         </ul>
-         </div>`
-         
-     }
-
-     return `
-    <!DOCTYPE html>
-    <html lang="en">
-    
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>My Team Profile</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="style.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        
-    
-    </head>
-    
-    <body>
-        <nav class="navbar">
-            <div class="navbar-header">
-                <span class="navbar-brand mb-0 h1">My Team</span>
-            </div>
-        </nav>
-    
-        <main class="container">
-            <div class="row">
-    
-             ${htmlCard}
-    
-                
-            </div>
-    
-        </main>
-    
-    
-    
-    </body>
-    
-    </html>` 
-
-      
-    
-
+    // join the HTML blocks
+    return html.join('');
 }
+// export function to generate entire page
+module.exports = team => {
 
-
-module.exports = generatePage;
+    return `
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/1e0a13a89f.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../dist/style.css" />
+    <title>Team Profile Generator</title>
+</head>
+<body>
+    <header>
+    <h1> My Team </h1>
+    </header>
+    <main> ${generateTeam(team)} </main>
+     
+</body>
+</html>
+    `;
+}
