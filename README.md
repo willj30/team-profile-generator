@@ -26,6 +26,10 @@
 
 ![alt text](./assets/images/team-profile-sc.png)
 
+Demonstration:
+
+ [![Watch the video](./assets/images/tpgv-sc.png)](https://drive.google.com/file/d/1BLy-M0GcvehctYPl4A5xCqcIu56COLT-/view)
+
   ## License
   The license this project is under is MIT. For more information, please click the link below:
 
