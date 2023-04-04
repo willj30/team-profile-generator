@@ -28,25 +28,25 @@ const teamGenerator = () => {
         {
             type: 'input',
             name: 'name',
-            message: 'What is your team manager name? (Required)',
+            message: 'What is your team manager name?',
             validate: validateString,
         },
         {
             type: 'input',
             name: 'employeeId',
-            message: 'Enter your manager employee ID (Required)',
+            message: 'Enter your manager employee ID',
             validate: validateNumber,
         },
         {
             type: 'input',
             name: 'email',
-            message: 'Enter your manager email address (Required)',
+            message: 'Enter your manager email address',
             validate: validateEmail,
         },
         {
             type: 'input',
             name: 'officeNumber',
-            message: 'Enter your manager office number (Required)',
+            message: 'Enter your manager office number',
             validate: validateNumber
         },
     ]).then(answers => {
@@ -90,19 +90,19 @@ const promptEngineer = () => {
         {
             type: 'input',
             name: 'name',
-            message: 'What is the engineers name? (Required)',
+            message: 'What is the engineers name?',
             validate: validateString,
         },
         {
             type: 'input',
             name: 'employeeId',
-            message: 'Enter the employee ID (Required)',
+            message: 'Enter the employee ID',
             validate: validateNumber,
         },
         {
             type: 'input',
             name: 'email',
-            message: 'Enter engineer email address (Required)',
+            message: 'Enter engineer email address',
             validate: validateEmail,
         },
         {
@@ -130,34 +130,27 @@ const promptIntern = () => {
         {
             type: 'input',
             name: 'name',
-            message: 'What is the name of the intern? (Required)',
+            message: 'What is the name of the intern?',
             validate: validateString,
         },
         {
             type: 'input',
             name: 'employeeId',
-            message: 'Enter the employee ID (Required)',
+            message: 'Enter the employee ID',
             validate: validateNumber,
         },
         {
             type: 'input',
             name: 'email',
-            message: 'Enter the intern email address (Required)',
+            message: 'Enter the intern email address',
             validate: validateEmail,
         },
         {
             type: 'input',
             name: 'school',
-            message: 'Enter the intern school name. (Required)',
-            validate: school => {
-                if (school) {
-                    return true;
-                } else {
-                    console.log('Please enter a school name!');
-                    return false;
-                }
-            }
-        }
+            message: 'Enter the intern school name.',
+            validate: validateString,
+        },
     ]).then(answers => {
         console.log(answers);
         const intern = new Intern(answers.name, answers.employeeId, answers.email, answers.school);
